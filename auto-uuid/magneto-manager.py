@@ -28,6 +28,42 @@ def connect_to_serial():
     return None
 
 
+@app.route("/get_timezone", methods=["GET"])
+def get_timezone():
+    timezone = subprocess.run(
+        ["timedatectl", "show"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return jsonify(
+        {
+            "timezone": timezone.stdout.split()[0].replace("\n", ""),
+        }
+    )
+
+@app.route("/set_timezone", methods=["GET","POST"])
+def set_timezone():
+    new_timezone = request.args.get('timezone', default=None)
+    if new_timezone is None:
+        new_timezone = subprocess.run(
+          ["curl", "--fail", "https://ipapi.co/timezone"],
+          capture_output=True,
+          text=True,
+          check=True,)
+        new_timezone = new_timezone.stdout
+    timezone = subprocess.run(
+        ["timedatectl", "set-timezone", new_timezone],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return jsonify(
+        {
+            "timezone": new_timezone,
+        }
+    )
+
 @app.route("/get_os_version", methods=["GET"])
 def get_os_version():
     return jsonify({"version": VERSION_STR})
