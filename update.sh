@@ -15,6 +15,8 @@ update_os() {
     /home/pi/.KlipperScreen-env/bin/pip3 install sdbus_networkmanager
     mv /home/pi/KlipperScreen /home/pi/KlipperScreen-backof
     git clone https://github.com/KlipperScreen/KlipperScreen /home/pi/KlipperScreen 
+    cd /home/pi/KlipperScreen
+    git checkout a7b8c4c
     
     if [ $? -ne 0 ]; then
         echo "Failed to install Qt development packages. Exiting..."
