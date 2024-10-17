@@ -11,6 +11,7 @@ update_os() {
     
     echo 'armbian' | sudo service KlipperScreen stop
     /home/pi/.KlipperScreen-env/bin/pip3 install sdbus
+    /home/pi/.KlipperScreen-env/bin/pip3 install psutil
     /home/pi/.KlipperScreen-env/bin/pip3 install sdbus_networkmanager
     mv /home/pi/KlipperScreen /home/pi/KlipperScreen-backof
     git clone https://github.com/KlipperScreen/KlipperScreen /home/pi/KlipperScreen 
